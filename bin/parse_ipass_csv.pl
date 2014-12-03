@@ -61,7 +61,7 @@ my $out_fh=IO::File->new("> $output_filename") || die "could not open output fil
 
 $out_fh->print("Date,Payee,Category,Memo,Outflow,Inflow");
 foreach my $record (@entries) {
-    my ($date)=split(/\s+/, $record->{"Transactioin date"});
+    my ($date)=split(/\s+/, $record->{"Transaction date"});
     die "No date" unless($date);
     die 'no type' unless($record->{"Transaction type"});
     die 'no location' unless($record->{"Roadway"});

@@ -79,9 +79,9 @@ foreach my $record (@entries) {
     my $amount=$record->{"Transaction amount"};
     die "no amount" unless(defined($amount));
     if($amount>0) {
-        @change=[0, $amount];
+        @change=(0, $amount);
     } else {
-        @change=[-$amount, 0];
+        @change=(-$amount, 0);
     }
     $out_fh->print(join(",",
                         $date,

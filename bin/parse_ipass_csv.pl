@@ -59,7 +59,7 @@ while(my $line=$input_fh->getline) {
 my $output_filename="out.csv";
 my $out_fh=IO::File->new("> $output_filename") || die "could not open output file $output_filename";
 
-$out_fh->print("Date,Payee,Category,Memo,Outflow,Inflow");
+$out_fh->print("Date,Payee,Category,Memo,Outflow,Inflow\n");
 foreach my $record (@entries) {
     my ($date)=split(/\s+/, $record->{"Transaction date"});
     die "No date" unless($date);

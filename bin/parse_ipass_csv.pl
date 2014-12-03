@@ -66,13 +66,13 @@ foreach my $record (@entries) {
     die 'no type' unless($record->{"Transaction type"});
     die 'no location' unless($record->{"Roadway"});
     my ($payee)=join(' ',
-                     $record->{"TransactionType"},
+                     $record->{"Transaction type"},
                      $record->{"Roadway"},
                     );
     my $category='';
     die 'no location' unless($record->{"Location"});
     my $memo=join(' ',
-                  $record->{"TransactionType"},
+                  $record->{"Transaction type"},
                   $record->{"Location"},
                  );
     my @change;

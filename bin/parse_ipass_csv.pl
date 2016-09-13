@@ -62,6 +62,9 @@ my $out_fh=IO::File->new("> $output_filename") || die "could not open output fil
 $out_fh->print("Date,Payee,Category,Memo,Outflow,Inflow\n");
 foreach my $record (@entries) {
     my ($date)=split(/\s+/, $record->{"Transaction date"});
+    if($date=~/\./) {
+        $date=~s/\./\//g;
+    }
     #use Data::Dumper;
     #print Dumper($record);
     die "No date" unless($date);

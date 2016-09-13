@@ -65,11 +65,13 @@ foreach my $record (@entries) {
     #use Data::Dumper;
     #print Dumper($record);
     die "No date" unless($date);
-    die 'no type' unless($record->{"Transaction type"});
+    #die 'no type' unless($record->{"Transaction type"});
+    die 'no Description' unless($record->{"Description"});
     #if($record->{"Transaction type"} eq 'CC AUTOCHARGE') {
     #    die 'cc autocharge';
     #}
-    if(! $record->{"Roadway"}) {
+    #if(! $record->{"Roadway"}) {
+    if(! $record->{"Plaza/Lane"}) {
         if($record->{"Transaction type"} eq 'CC AUTOCHARGE') {
             #$record->{"Roadway"}='';
             #$record->{"Location"}=' ';
@@ -81,17 +83,17 @@ foreach my $record (@entries) {
     }
 
     my ($payee)=join(' ',
-                     $record->{"Transaction type"},
-                     $record->{"Roadway"},
+                     $record->{"Description"},
+                     $record->{"Plaza/Lane"},
                     );
     my $category='';
     die 'no location' unless($record->{"Location"});
     my $memo=join(' ',
-                  $record->{"Transaction type"},
+                  $record->{"Description"},
                   $record->{"Location"},
                  );
     my @change;
-    my $amount=$record->{"Transaction amount"};
+    my $amount=$record->{"Amount"};
     die "no amount" unless(defined($amount));
     if($amount>0) {
         @change=(0, $amount);

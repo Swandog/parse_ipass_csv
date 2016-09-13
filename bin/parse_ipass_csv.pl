@@ -62,9 +62,24 @@ my $out_fh=IO::File->new("> $output_filename") || die "could not open output fil
 $out_fh->print("Date,Payee,Category,Memo,Outflow,Inflow\n");
 foreach my $record (@entries) {
     my ($date)=split(/\s+/, $record->{"Transaction date"});
+    #use Data::Dumper;
+    #print Dumper($record);
     die "No date" unless($date);
     die 'no type' unless($record->{"Transaction type"});
-    die 'no location' unless($record->{"Roadway"});
+    #if($record->{"Transaction type"} eq 'CC AUTOCHARGE') {
+    #    die 'cc autocharge';
+    #}
+    if(! $record->{"Roadway"}) {
+        if($record->{"Transaction type"} eq 'CC AUTOCHARGE') {
+            #$record->{"Roadway"}='';
+            #$record->{"Location"}=' ';
+            print "skipping refill\n";
+            next;
+        } else {
+            die 'no location';
+        }
+    }
+
     my ($payee)=join(' ',
                      $record->{"Transaction type"},
                      $record->{"Roadway"},

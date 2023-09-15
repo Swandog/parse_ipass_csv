@@ -3,7 +3,7 @@
 import csv
 import sys
 
-with open(sys.argv[1]) as csvfile:
+with open(sys.argv[1], encoding='utf-8-sig') as csvfile:
     reader=csv.reader(csvfile)
 
     headers_line=next(reader)

@@ -2,6 +2,7 @@
 
 import csv
 import sys
+from datetime import datetime
 
 with open(sys.argv[1], encoding='utf-8-sig') as csvfile:
     reader=csv.reader(csvfile)
@@ -13,7 +14,8 @@ with open(sys.argv[1], encoding='utf-8-sig') as csvfile:
 
     print('Date,Payee,Category,Memo,Outflow,Inflow')
     for row in reader:
-        date,_,_=row[headers['Transaction Date']].split()
+        transaction_datetime=datetime.strptime(row[headers['Transaction Date']], '%b %d, %Y %I:%M:%S %p')
+        date=transaction_datetime.strftime('%m/%d/%Y')
 
         payee='-'.join(row[headers['Location']].split('-')[0:2])
         category=''

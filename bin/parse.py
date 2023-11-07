@@ -14,12 +14,25 @@ with open(sys.argv[1], encoding='utf-8-sig') as csvfile:
 
     print('Date,Payee,Category,Memo,Outflow,Inflow')
     for row in reader:
-        transaction_datetime=datetime.strptime(row[headers['Transaction Date']], '%b %d, %Y %I:%M:%S %p')
+        if 'Transaction Date' in headers:
+            transaction_datetime=datetime.strptime(row[headers['Transaction Date']], '%b %d, %Y %I:%M:%S %p')
+        elif 'Posting Date' in headers:
+            transaction_datetime=datetime.strptime(row[headers['Posting Date']], '%Y/%m/%d %H:%M:%S')
+        else:
+            raise ValueError("transaction_datetime")
+           
         date=transaction_datetime.strftime('%m/%d/%Y')
 
-        payee='-'.join(row[headers['Location']].split('-')[0:2])
+        if 'Location' in headers:
+            location=row[headers['Location']]
+        elif 'Plaza' in headers:
+            location=row[headers['Plaza']]
+        else:
+            raise ValueError("location")
+        
+        payee='-'.join(location.split('-')[0:2])
         category=''
-        memo=row[headers['Location']]
+        memo=location
         outflow=abs(float(row[headers['Amount']].replace('$', '')))
         inflow=''
 
